@@ -1,36 +1,36 @@
 const jwt = require('jsonwebtoken');
 
-function generateToken(userInfo){
-    if (!userInfo){
-        return null;
-    }
+function generateToken(userInfo) {
+  if (!userInfo) {
+    return null;
+  }
 
-    return jwt.sign(userInfo, process.env.JWT_SECRET, {
-        expiresIn: '1h'
-    })
+  return jwt.sign(userInfo, process.env.JWT_SECRET, {
+    expiresIn: '1h'
+  })
 }
 
-function verifyToken(username, token){
-    return jwt.verify(token, process.env.JWT_SECRET, (error, response)=>{
-        if(error){
-           return{
-            verified: false,
-            message:'Inavlid token'
-           } 
-        }
+function verifyToken(username, token) {
+  return jwt.verify(token, process.env.JWT_SECRET, (error, response) => {
+    if (error) {
+      return {
+        verified: false,
+        message: 'invalid token'
+      }
+    }
 
-        if (response.username !== username){
-            return{
-                verified: false,
-                message: 'Invalid user'
-            }
-        }
+    if (response.username !== username) {
+      return {
+        verified: false,
+        message: 'invalid user'
+      }
+    }
 
-        return{
-            verified: true,
-            message: 'verified'
-        }
-    })
+    return {
+      verified: true,
+      message: 'verifed'
+    }
+  })
 }
 
 module.exports.generateToken = generateToken;
